@@ -169,7 +169,7 @@ class ColorHandPose3DNetwork(object):
             scoremap = ops.conv(x, 'conv6_2', kernel_size=1, stride=1, out_chan=2, trainable=train)
             
             '''yafei'''
-            print(scoremap.shape) #batch_size*30*40*2
+            #print(scoremap.shape) #batch_size*30*40*2
             scorevec = tf.reshape(scoremap,[scoremap.shape[0],scoremap.shape[1]*scoremap.shape[2]*scoremap.shape[3]]) #batch_size*2400
             score_full = tf.contrib.layers.fully_connected(scorevec, num_outputs)
             label = tf.placeholder(tf.int32, [None], 'label')
@@ -182,10 +182,9 @@ class ColorHandPose3DNetwork(object):
             loss_0d, loss_1d, loss_2d, loss_3d, _, _, nebula3d = sparse_ml(n_clusters, num_outputs, nebula3d, z, label, info_type='scalar')
             full_dim = int(scoremap.shape[1]*scoremap.shape[2]*scoremap.shape[3])
             z_fullvec = tf.contrib.layers.fully_connected(z,full_dim)
-            print("full_dim: %d"%full_dim)
-            print(z_fullvec)
+
             scoremap_new = tf.reshape(z_fullvec, scoremap.shape)
-            print(scoremap_new.shape)
+            #print(scoremap_new.shape)
             '''yafei'''
             
             scoremap_list.append(scoremap_new)
