@@ -58,7 +58,7 @@ for i, pred_item in enumerate(hand_mask_pred):
     gt = tf.reshape(data['hand_mask'], [s[0]*s[1]*s[2], -1])
     pred = tf.reshape(hand_mask_pred, [s[0]*s[1]*s[2], -1])
     loss += tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=gt))
-    loss += tf.nn.l2_loss(pred-gt)
+    loss += tf.reduce_mean(tf.nn.l2_loss(pred-gt))
     loss += loss_z
     #print(loss)
 
